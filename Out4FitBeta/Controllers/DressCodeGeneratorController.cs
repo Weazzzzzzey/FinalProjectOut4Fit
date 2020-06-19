@@ -49,7 +49,7 @@ namespace Out4FitBeta.Controllers
             DressCodePreparation DCP = new DressCodePreparation();
             string theResult = DCP.Preparation(newjsonline,gender);
 
-            string finalResult = hand.ClothesGeneration(theResult);
+            string finalResult = hand.ClothesGeneration(theResult,city,id);
 
             return finalResult;
 

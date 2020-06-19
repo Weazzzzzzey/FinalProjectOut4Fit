@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Out4FitBeta.DataBase;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,11 @@ namespace Out4FitBeta.Business_Logic
     public class HandM
     {
     
-        public string ClothesGeneration(string theResult)
+        public string ClothesGeneration(string theResult, string city, int id)
         {
+            DataBaseRepository dataBase = new DataBaseRepository();
+            
+            
             List<string> categoriesInList = new List<string>();
             string[] categories = theResult.Split(',');
 
@@ -36,6 +40,7 @@ namespace Out4FitBeta.Business_Logic
                 finalResult = finalResult + secondsplit[0];
             }
 
+            dataBase.Insert(id, city, finalResult, categoriesInList.Last());
             return finalResult + "," + categoriesInList.Last();
         }
     

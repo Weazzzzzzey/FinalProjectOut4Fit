@@ -8,16 +8,11 @@ using System.Web.Http;
 
 namespace Out4FitBeta.Controllers
 {
+
     public class DataBaseController : ApiController
     {
         
         DataBaseRepository dataBase = new DataBaseRepository();
-
-        // GET: api/DataBase
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET: api/DataBase/5
         public string Get(int id)
@@ -26,6 +21,7 @@ namespace Out4FitBeta.Controllers
         }
 
         // POST: api/DataBase
+        [ActionName("route")]
         public string Post(string userName, string usergender ,string password)
         {
             dataBase.Insert(userName,usergender,password);

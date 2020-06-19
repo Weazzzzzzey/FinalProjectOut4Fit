@@ -121,5 +121,28 @@ namespace Out4FitBeta.DataBase
             }
         }
 
+        public void Insert(int userId, string city, string body, string temperature)
+        {
+            
+            connection.Open();
+            try
+            {
+                sqlEil = $"INSERT INTO `allrequestsever` (`ID`, `userID`, `city`, `temperature`, `responsebody`) VALUES (NULL, '{userId}', '{city}', '{temperature}', '{body}');";
+                cmd = new MySqlCommand(sqlEil, connection);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+
     }
 }
