@@ -48,33 +48,49 @@ namespace Out4FitBeta.Controllers
             DressCodePreparation DCP = new DressCodePreparation();
             string theResult = DCP.Preparation(newjsonline,gender);
 
+            List<string> categoriesInList = new List<string>();
+            string[] categories = theResult.Split(',');
+
+            for (int i = 0; i < categories.Length; i++)
+            {
+                categoriesInList.Add(categories[i]);
+            }
+
+            string finalResult = "";
+
+            for (int i = 0; i < categoriesInList.Count-1; i++)
+            {
+                var client = new RestClient("https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list?categories=" + categoriesInList[i] + "&country=us&lang=en&currentpage=0&pagesize=1");
+                var request = new RestRequest(Method.GET);
+                request.AddHeader("x-rapidapi-host", "apidojo-hm-hennes-mauritz-v1.p.rapidapi.com");
+                request.AddHeader("x-rapidapi-key", "9a5793a005mshb2a37a462d5ba89p10baacjsn1596887f9ad7");
+                IRestResponse response = client.Execute(request);
+                JObject json = JObject.Parse(response.Content);
+                string firstsplit = Convert.ToString(json);
+                string[] firstsplit1 = firstsplit.Split(new string[] { "\"name\":" }, StringSplitOptions.None);
+                string[] secondsplit = firstsplit1[1].Split(new string[] { "\"stock\":" }, StringSplitOptions.None);
+                finalResult = finalResult + secondsplit[0];
+            }
+
+            //
+            // Create a string array with the lines of text
+            string[] lines = { $"{finalResult + "," + categoriesInList.Last()}" };
+
+            // Set a variable to the Documents path.
+            string docPath =
+              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            // Write the string array to a new file named "WriteLines.txt".
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "final.txt")))
+            {
+                foreach (string line in lines)
+                    outputFile.WriteLine(line);
+            }
 
 
-            //////
-            ///
+            //
 
-            //string[] categories = theResult.Split(',');
-
-            //string[] clothescategory = new string[4];
-            //clothescategory[0] = "men_tshirtstanks_shortsleeve";
-            //clothescategory[1] = "men_shorts_cargo";
-            //clothescategory[3] = "men_shoes_sneakers";
-            //clothescategory[2] = "men_accessories_hatscaps_beanie";
-
-            //var client = new RestClient("https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list?categories=%22+clothescategory[i]+%22&country=us&lang=en&currentpage=0&pagesize=1%22");
-            //var request = new RestRequest(Method.GET);
-            //request.AddHeader("x-rapidapi-host", "apidojo-hm-hennes-mauritz-v1.p.rapidapi.com");
-            //request.AddHeader("x-rapidapi-key", "9a5793a005mshb2a37a462d5ba89p10baacjsn1596887f9ad7");
-            //IRestResponse response = client.Execute(request);
-            //JObject json = JObject.Parse(response.Content);
-            //string firstsplit = Convert.ToString(json);
-            //string[] firstsplit1 = firstsplit.Split(new string[] { "\"name\":" }, StringSplitOptions.None);
-            //string[] secondsplit = firstsplit1[1].Split(new string[] { "\"stock\":" }, StringSplitOptions.None);
-
-
-            /////
-            ///
-            return theResult;
+            return finalResult + "," + categoriesInList.Last();
 
         }
 

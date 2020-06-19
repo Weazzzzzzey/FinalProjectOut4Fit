@@ -199,7 +199,7 @@ namespace Out4FitBeta.Business_Logic
             }
             else if (RealTemp > 18 && HoursOfSun > 11)
             {
-                recommendation = recommendation + "ladies_accessories_hats_caps";
+                recommendation = recommendation + "ladies_accessories_hats_caps,";
             }
             else if (RealTemp > 18 && HoursOfSun < 11)
             {
