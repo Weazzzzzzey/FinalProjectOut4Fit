@@ -15,7 +15,6 @@ namespace Out4FitBeta.Controllers
     public class ValuesController : ApiController
     {
 
-
         // GET api/values/id
         public string Get(string city)
         {
@@ -32,19 +31,5 @@ namespace Out4FitBeta.Controllers
             return weather.CityKeyGeneration(newjsonline);
         }
 
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
     }
 }

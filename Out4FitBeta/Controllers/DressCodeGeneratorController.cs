@@ -16,14 +16,14 @@ namespace Out4FitBeta.Controllers
     public class DressCodeGeneratorController : ApiController
     {
 
-        DataBaseController data = new DataBaseController();
+        DataBaseRepository repo = new DataBaseRepository();
         ValuesController values = new ValuesController();
         HandM hand = new HandM();
 
         // GET: api/dresscodegenerator/result
         public string Get(int id, string city)
         {
-            string gender = data.Get(id);
+            string gender = repo.Select(id);
             
             if (gender == "")
             {
@@ -53,28 +53,6 @@ namespace Out4FitBeta.Controllers
 
             return finalResult;
 
-        }
-
-        // POST api/dresscodegenerator/addUser
-        public string Post(string userName, string userGender ,string password)
-        {
-            data.Post(userName, userGender, password);
-            return "User was added.";
-        }
-
-
-        // DELETE: api/dresscodegenerator/5
-        public string Delete(int id)
-        {
-            data.Delete(id);
-            return "User was deleted.";
-        }
-
-        // PUT: api/dresscodegenerator/5
-        public string Put(int id, string value)
-        {
-            data.Put(id, value);
-            return "Password was changed";
         }
 
     }

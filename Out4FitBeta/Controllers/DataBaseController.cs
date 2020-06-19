@@ -17,7 +17,7 @@ namespace Out4FitBeta.Controllers
         // GET: api/DataBase/5
         public string Get(int id)
         {
-            return dataBase.Select(id);
+            return "Paskutinis irasas pridetas."; //dataBase.Select(id);
         }
 
         // POST: api/DataBase
