@@ -211,6 +211,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Business Logic\DressCodePreparation.cs" />
+    <Compile Include="Business Logic\HandM.cs" />
     <Compile Include="Business Logic\WeatherDataSeparation.cs" />
     <Compile Include="Controllers\DataBaseController.cs" />
     <Compile Include="Controllers\DressCodeGeneratorController.cs" />
