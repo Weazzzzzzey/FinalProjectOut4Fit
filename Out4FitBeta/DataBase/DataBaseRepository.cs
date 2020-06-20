@@ -55,7 +55,7 @@ namespace Out4FitBeta.DataBase
                 sqlEil = $"INSERT INTO `user` (`userID`, `userName`, `gender`, `password`) VALUES (NULL, '{userName}', '{gender}', '{password}');";
                 cmd = new MySqlCommand(sqlEil, connection);
                 cmd.ExecuteNonQuery();
-                string json = JavaScriptSerializer.Serialize(new { results = resultRows }); ;
+                return "User was added";
             }
             catch (Exception exc)
             {
@@ -71,7 +71,7 @@ namespace Out4FitBeta.DataBase
             }
         }
 
-        public void Delete(int id)
+        public string Delete(int id)
         {
 
             connection.Open();
@@ -83,11 +83,13 @@ namespace Out4FitBeta.DataBase
 
                 cmd = new MySqlCommand(sqlEil, connection);
                 cmd.ExecuteNonQuery();
+                return "User Was deleted.";
 
             }
             catch (Exception exc)
             {
                 Console.WriteLine(exc);
+                return null;
             }
             finally
             {
@@ -100,7 +102,7 @@ namespace Out4FitBeta.DataBase
 
         }
 
-        public void Update(int id, string newpassword)
+        public string Update(int id, string newpassword)
         {
             connection.Open();
 
@@ -109,12 +111,12 @@ namespace Out4FitBeta.DataBase
                 sqlEil = $"UPDATE `user` SET `password` = '{newpassword}' WHERE `user`.`userID` = {id}";
                 cmd = new MySqlCommand(sqlEil, connection);
                 cmd.ExecuteNonQuery();
-
+                return "User was updated";
             }
             catch (Exception exc)
             {
                 Console.WriteLine(exc);
-
+                return null;
             }
             finally
             {

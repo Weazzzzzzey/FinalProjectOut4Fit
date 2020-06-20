@@ -18,29 +18,25 @@ namespace Out4FitBeta.Controllers
         public string Get(int id)
         {
             return dataBase.SelectAndInsert(id);
-            //return "Paskutinis irasas pridetas."; //dataBase.Select(id);
         }
 
         // POST: api/DataBase
         [ActionName("route")]
         public string Post(string userName, string usergender ,string password)
         {
-            dataBase.Insert(userName,usergender,password);
-            return "User was added.";
+            return dataBase.Insert(userName,usergender,password);            
         }
 
         // PUT: api/DataBase/5
-        public string Put(int id, string value)
+        public string Put(int id, string password)
         {
-            dataBase.Update(id,value);
-            return "Password was changed";
+            return dataBase.Update(id,password);
         }
 
         // DELETE: api/DataBase/5
         public string Delete(int id)
         {
-            dataBase.Delete(id);
-            return "User was deleted.";
+            return dataBase.Delete(id);            
         }
     }
 }
