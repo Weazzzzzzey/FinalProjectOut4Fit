@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Out4FitBeta.Business_Logic;
 using Out4FitBeta.DataBase;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,8 @@ using System.Web.Http;
 namespace Out4FitBeta.Controllers
 {
 
-    public class DataBaseController : ApiController
+    public class UsersController : ApiController
     {
-        
         DataBaseRepository dataBase = new DataBaseRepository();
 
         // GET: api/DataBase/5
@@ -21,16 +21,27 @@ namespace Out4FitBeta.Controllers
             return dataBase.SelectAndInsert(id);
         }
 
-        // POST: api/DataBase
-        public JToken Post(string userName, string usergender ,string password)
+        // GET: api/DataBase/5
+        public JToken Get()
         {
-            return dataBase.Insert(userName,usergender,password);            
+            return dataBase.selectAllUsers();
+        }
+
+        // POST: api/DataBase
+        public JToken Post([FromBody] Users data)
+        {
+            return dataBase.Insert(data.getUserName(),data.getGender(),data.getPassword());            
         }
 
         // PUT: api/DataBase/5
-        public JToken Put(int id, string password)
+        public JToken Put(int id, [FromBody] Users data) //
         {
-            return dataBase.Update(id,password);
+            Users toChange = data;
+            if (toChange.getID() == id)
+            {
+                return dataBase.Update(id, toChange.getPassword(),toChange.getGender());
+            }
+            else return "Error";
         }
 
         // DELETE: api/DataBase/5

@@ -213,8 +213,9 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Business Logic\DressCodePreparation.cs" />
     <Compile Include="Business Logic\HandM.cs" />
+    <Compile Include="DataBase\Users.cs" />
     <Compile Include="Business Logic\WeatherDataSeparation.cs" />
-    <Compile Include="Controllers\DataBaseController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\DressCodeGeneratorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

@@ -6,6 +6,7 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using Microsoft.Ajax.Utilities;
 using System.Web.Script.Serialization;
+using Out4FitBeta.Business_Logic;
 
 namespace Out4FitBeta.DataBase
 {
@@ -102,13 +103,13 @@ namespace Out4FitBeta.DataBase
 
         }
 
-        public string Update(int id, string newpassword)
+        public string Update(int id, string newpassword, string gender)
         {
             connection.Open();
 
             try
             {
-                sqlEil = $"UPDATE `user` SET `password` = '{newpassword}' WHERE `user`.`userID` = {id}";
+                sqlEil = $"UPDATE `user` SET `gender` = '{gender}', `password` = '{newpassword}' WHERE `user`.`userID` = {id};";
                 cmd = new MySqlCommand(sqlEil, connection);
                 cmd.ExecuteNonQuery();
                 return "User was updated";
@@ -148,6 +149,53 @@ namespace Out4FitBeta.DataBase
                     connection.Close();
                 }
             }
+        }
+
+        public string selectAllUsers()
+        {
+            List<Users> Useriai = new List<Users>();
+
+            connection.Open();
+            string userGender = "";
+            try
+            {
+                sqlEil = $"SELECT * FROM `user`";
+
+                adap = new MySqlDataAdapter(sqlEil, connection);
+                DataSet ds = new DataSet();
+                adap.Fill(ds);
+
+                DataTable dataGridView1 = ds.Tables[0];
+                if (ds.Tables[0].Rows.Count != 0)
+                {
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        string userID = ds.Tables[0].Rows[i]["userID"].ToString();
+                        string username = ds.Tables[0].Rows[i]["userName"].ToString();
+                        string userGenderr = ds.Tables[0].Rows[i]["gender"].ToString();
+                        string userPass = ds.Tables[0].Rows[i]["password"].ToString();
+
+                        Useriai.Add(new Users(Convert.ToInt32(userID),username,userGenderr,userPass));
+                    }
+                    
+                    //userGender = ds.Tables[0].Rows[0]["gender"].ToString(); //paleist i male arba female
+
+                }
+                return Useriai.Count.ToString(); //
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return null;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+
         }
 
         public string SelectAndInsert(int userId)
@@ -214,7 +262,7 @@ namespace Out4FitBeta.DataBase
                 }
             }
 
-            return "Last record was added";
+            return $"Last record was added.";
 
         }
 
