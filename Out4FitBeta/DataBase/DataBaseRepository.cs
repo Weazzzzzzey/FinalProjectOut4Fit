@@ -144,5 +144,109 @@ namespace Out4FitBeta.DataBase
             }
         }
 
+        public string SelectAndInsert(int userId)
+        {
+
+            connection.Open();
+            string userID = "";
+            string userCity = "";
+            string userTemp = "";
+            string userResponse = "";
+            try
+            {
+                sqlEil = $"SELECT * FROM `allrequestsever` WHERE `userID` = {userId}";
+                int count = 0;
+
+
+                //cmd = new MySqlCommand(sqlEil, connection);
+
+                adap = new MySqlDataAdapter(sqlEil, connection);
+                DataSet ds = new DataSet();
+                adap.Fill(ds);
+
+                DataTable dataGridView1 = ds.Tables[0];
+                if (ds.Tables[0].Rows.Count != 0)
+                {
+                    count = Convert.ToInt32(ds.Tables[0].Rows.Count.ToString());
+                    userID = ds.Tables[0].Rows[count - 1]["userID"].ToString();
+                    userCity = ds.Tables[0].Rows[count - 1]["city"].ToString();
+                    userTemp = ds.Tables[0].Rows[count - 1]["temperature"].ToString();
+                    userResponse = ds.Tables[0].Rows[count - 1]["responsebody"].ToString();
+
+                }
+                else return null;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return null;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+
+            connection.Open();
+            try
+            {
+                sqlEil = $"INSERT INTO `userssaved` (`requestID`, `userID`, `city`, `temperature`, `responseBody`) VALUES (NULL, '{userID}', '{userCity}', '{userTemp}', '{userResponse}');";
+                cmd = new MySqlCommand(sqlEil, connection);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+
+            return "Last record was added";
+
+        }
+
+
+        public string SelectCount(int id)
+        {
+            connection.Open();
+            string rowsCount = "";
+            try
+            {
+                sqlEil = $"SELECT COUNT(*) FROM `allrequestsever` WHERE `userID` = {id}";
+
+                //cmd = new MySqlCommand(sqlEil, connection);
+
+                adap = new MySqlDataAdapter(sqlEil, connection);
+                DataSet ds = new DataSet();
+                adap.Fill(ds);
+
+                DataTable dataGridView1 = ds.Tables[0];
+                if (ds.Tables[0].Rows.Count != 0)
+                {
+                    rowsCount = ds.Tables[0].Rows.Count.ToString();
+                }
+                return rowsCount;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return null;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+
     }
 }
