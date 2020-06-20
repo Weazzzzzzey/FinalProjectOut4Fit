@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using MySql.Data.MySqlClient;
+using Microsoft.Ajax.Utilities;
+using System.Web.Script.Serialization;
 
 namespace Out4FitBeta.DataBase
 {
@@ -45,7 +47,7 @@ namespace Out4FitBeta.DataBase
             }
         }
 
-        public void Insert(string userName, string gender, string password)
+        public string Insert(string userName, string gender, string password)
         {
             connection.Open();
             try
@@ -53,10 +55,12 @@ namespace Out4FitBeta.DataBase
                 sqlEil = $"INSERT INTO `user` (`userID`, `userName`, `gender`, `password`) VALUES (NULL, '{userName}', '{gender}', '{password}');";
                 cmd = new MySqlCommand(sqlEil, connection);
                 cmd.ExecuteNonQuery();
+                string json = JavaScriptSerializer.Serialize(new { results = resultRows }); ;
             }
             catch (Exception exc)
             {
                 Console.WriteLine(exc);
+                return null;
             }
             finally
             {
@@ -210,42 +214,6 @@ namespace Out4FitBeta.DataBase
 
             return "Last record was added";
 
-        }
-
-
-        public string SelectCount(int id)
-        {
-            connection.Open();
-            string rowsCount = "";
-            try
-            {
-                sqlEil = $"SELECT COUNT(*) FROM `allrequestsever` WHERE `userID` = {id}";
-
-                //cmd = new MySqlCommand(sqlEil, connection);
-
-                adap = new MySqlDataAdapter(sqlEil, connection);
-                DataSet ds = new DataSet();
-                adap.Fill(ds);
-
-                DataTable dataGridView1 = ds.Tables[0];
-                if (ds.Tables[0].Rows.Count != 0)
-                {
-                    rowsCount = ds.Tables[0].Rows.Count.ToString();
-                }
-                return rowsCount;
-            }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc);
-                return null;
-            }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                {
-                    connection.Close();
-                }
-            }
         }
 
     }
