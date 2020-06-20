@@ -16,7 +16,7 @@ namespace Out4FitBeta.Controllers
     {
 
         // GET api/values/id
-        public string Get(string city)
+        public JToken Get(string city)
         {
             WeatherDataSeparation weather = new WeatherDataSeparation();
 

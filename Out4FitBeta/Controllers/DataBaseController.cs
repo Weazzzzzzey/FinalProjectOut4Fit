@@ -1,4 +1,5 @@
-﻿using Out4FitBeta.DataBase;
+﻿using Newtonsoft.Json.Linq;
+using Out4FitBeta.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,26 +16,25 @@ namespace Out4FitBeta.Controllers
         DataBaseRepository dataBase = new DataBaseRepository();
 
         // GET: api/DataBase/5
-        public string Get(int id)
+        public JToken Get(int id)
         {
             return dataBase.SelectAndInsert(id);
         }
 
         // POST: api/DataBase
-        [ActionName("route")]
-        public string Post(string userName, string usergender ,string password)
+        public JToken Post(string userName, string usergender ,string password)
         {
             return dataBase.Insert(userName,usergender,password);            
         }
 
         // PUT: api/DataBase/5
-        public string Put(int id, string password)
+        public JToken Put(int id, string password)
         {
             return dataBase.Update(id,password);
         }
 
         // DELETE: api/DataBase/5
-        public string Delete(int id)
+        public JToken Delete(int id)
         {
             return dataBase.Delete(id);            
         }

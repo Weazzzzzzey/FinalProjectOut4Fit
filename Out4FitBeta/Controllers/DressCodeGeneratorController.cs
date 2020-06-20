@@ -21,7 +21,7 @@ namespace Out4FitBeta.Controllers
         HandM hand = new HandM();
 
         // GET: api/dresscodegenerator/result
-        public string Get(int id, string city)
+        public JToken Get(int id, string city)
         {
             string gender = repo.Select(id);
             
@@ -30,7 +30,7 @@ namespace Out4FitBeta.Controllers
                 return "For subscribers only";
             }
 
-            string key = values.Get(city);
+            string key = values.Get(city).ToString();
 
             var client = new RestClient($"http://dataservice.accuweather.com/forecasts/v1/daily/5day/{key}?apikey=KfG1nMJ5g3M99pi4CGAEsaYApQCupum1&language=en-us&details=true&metric=true");
 
