@@ -16,14 +16,14 @@ namespace Out4FitBeta.Controllers
     public class DressCodeGeneratorController : ApiController
     {
 
-        DataBaseRepository repo = new DataBaseRepository();
+        DataBaseRepository database = new DataBaseRepository();
         ValuesController values = new ValuesController();
         HandM hand = new HandM();
 
         // GET: api/dresscodegenerator/result
         public JToken Get(int id, string city)
         {
-            string gender = repo.Select(id);
+            string gender = database.Select(id);
             
             if (gender == "")
             {
@@ -53,6 +53,13 @@ namespace Out4FitBeta.Controllers
 
             return finalResult;
 
+        }
+
+
+        // PUT: api/DataBase/5
+        public JToken Post(int id) //
+        {
+            return database.SelectAndInsert(id);
         }
 
     }

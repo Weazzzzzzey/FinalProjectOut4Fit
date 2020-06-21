@@ -15,10 +15,10 @@ namespace Out4FitBeta.Controllers
     {
         DataBaseRepository dataBase = new DataBaseRepository();
 
-        // GET: api/DataBase/5
+        // GET: api/DataBase/5 saved requests
         public JToken Get(int id)
         {
-            return dataBase.SelectAndInsert(id);
+            return dataBase.selectSavedRequests(id);
         }
 
         // GET: api/DataBase/5
@@ -26,6 +26,7 @@ namespace Out4FitBeta.Controllers
         {
             return dataBase.selectAllUsers();
         }
+
 
         // POST: api/DataBase
         public JToken Post([FromBody] Users data)
