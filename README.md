@@ -28,7 +28,7 @@ What you need to run our project:
 	- Click DressCodeGenerator tab and select a get method, then enter your user ID and name of your city. The method will return an outfit recommendation based on the weather in your city and also the local temperature.
 	- Click users tab and the Get method and enter user's ID to save the last DressCodeGenerator results.
 	- Click Get Users method to return all users.
-	- Click Get Vlues to generaty a city code.
+	- Click Get Values to generate a city code.
 * Run Postman
 	- Select Get method and insert a link to return the data. Link example : https:// [your local host] /api/Values?city=vilnius
 
